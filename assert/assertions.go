@@ -62,7 +62,7 @@ func ObjectsAreEqual(expected, actual interface{}) bool {
 
 	exp, ok := expected.([]byte)
 	if !ok {
-		return reflect.DeepEqual(expected, actual)
+		return DeepEqual(expected, actual)
 	}
 
 	act, ok := actual.([]byte)
@@ -341,11 +341,10 @@ func Equal(t TestingT, expected, actual interface{}, msgAndArgs ...interface{}) 
 	}
 
 	if !ObjectsAreEqual(expected, actual) {
-		diff := diff(expected, actual)
 		expected, actual = formatUnequalValues(expected, actual)
 		return Fail(t, fmt.Sprintf("Not equal: \n"+
 			"expected: %s\n"+
-			"actual  : %s%s", expected, actual, diff), msgAndArgs...)
+			"actual  : %s", expected, actual), msgAndArgs...)
 	}
 
 	return true
